@@ -7,11 +7,11 @@
     <body>
         {{ all_friends }}
         <h1>These are all my friends!</h1>
-        {% for friend in all_friends: %}
-            <p>ID: {{ friend['id'] }}</p>
-            <p>First Name: {{ friend['first_name'] }}</p>
-            <p>Last Name: {{ friend['last_name'] }}</p>
-            <p>Occupation: {{ friend['occupation'] }}</p>
+        {% for friends in all_friends: %}
+            <p>ID: {{ friends['id'] }}</p>
+            <p>First Name: {{ friends['first_name'] }}</p>
+            <p>Last Name: {{ friends['last_name'] }}</p>
+            <p>Occupation: {{ friends['occupation'] }}</p>
         <hr>
         {% endfor %}
         <h2>Add a Friend</h2>

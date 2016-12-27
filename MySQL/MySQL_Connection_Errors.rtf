@@ -5,16 +5,55 @@
 \margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")\
-fix-supply the correct password: root\
+\f0\fs24 \cf0 @app.route('/', methods=['GET'])\
+def index():\
+    #query = "SELECT * FROM email_addresses"\
+    #email = mysql.query_db(query)\
+    return render_template('index.html')\
 \
-sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (2003, "Can't connect to MySQL server on '127.0.0.1' (61)")\
-fix-use the same port that the mysql server is using: 8889\
+@app.route('/process', methods=['POST'])\
+def submit():\
+    if len(request.form['email']) < 1:\
+        flash("Email cannot be blank!")\
+    elif not EMAIL_REGEX.match(request.form['email']):\
+        flash("Invalid Email Address!")\
+    else:\
+        flash("Success!")\
+        #query = "INSERT INTO email_addresses (email, #created_at, updated_at) VALUES (:email, NOW(), #NOW())"\
+        #data = \{ 'email': request.form['email'] \}\
+        #mysql.query_db(query, data)\
+        #return render_template("index.html", list = #'show', input = 'hide')\
+    return redirect('/')\
 \
-NameError: global name 'ads' is not defined\
-fix- database name is not defined. Use the same database named defined globally: database: db\
 \
-KeyError: 'password'\
-fix- use the correct key for defining password: correct spelling for password\
 \
+\'97\'97\
+<!DOCTYPE html>\
+<html>\
+    <head>\
+        <meta charset="utf-8">\
+        <title>Email Validation With Data Base</title>\
+    </head>\
+    <body>\
+        \{% with messages = get_flashed_messages() %\}\
+            \{% if messages %\}\
+                \{% for message in messages %\}\
+                    <p>\{\{message\}\}</p>\
+                \{% endfor %\}\
+            \{% endif %\}\
+        \{% endwith %\}\
+\
+        \{\{ all_emails \}\}\
+        <div class=\{\{list\}\}>\
+            <h1>Email Addresses Entered:</h1>\
+            \{% for email in all_emails %\}\
+                <h3>\{\{ email['email'] \}\} \{\{ email['created_at'] \}\}</h3>\
+            \{% endfor %\}\
+        </div>\
+        <form class=\{\{input\}\} action="/process" method="post">\
+            Enter Your Email Address:<input type="text" name="email" value="" placeholder="Your Email">\
+            <input type="submit" name="Submit" value="Submit">\
+        </form>\
+    </body>\
+</html>\
 }

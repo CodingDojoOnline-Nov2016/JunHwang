@@ -7,7 +7,6 @@ def random():
     import random
     session['numb'] = random.randrange(0, 101)
     return render_template('GreatNumberGame.html', numb = session['numb'], route = '/submit', submit = 'Submit', text = 'text')
-                            #random number saved
 
 @app.route('/submit', methods=['POST'])
 def compare():
