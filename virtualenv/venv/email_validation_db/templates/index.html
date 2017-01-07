@@ -23,7 +23,7 @@
            <h1>Email Addresses Entered:</h1>
            <hr>
            {% for email_addresses in all_emails: %}
-               <h3>ID:{{ email_addresses['id'] }} - {{ email_addresses['email'] }} {{ email_addresses['created_at']}}</h3>
+               <h3>{{ email_addresses['email'] }} {{ email_addresses['created_at']}}</h3>
                <form class="" action="/{{ email_addresses['id'] }}" method='post'>
                    <input type="submit" value="Delete Email">
                </form>

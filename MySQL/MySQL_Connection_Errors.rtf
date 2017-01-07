@@ -5,55 +5,31 @@
 \margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 @app.route('/', methods=['GET'])\
-def index():\
-    #query = "SELECT * FROM email_addresses"\
-    #email = mysql.query_db(query)\
-    return render_template('index.html')\
+\f0\fs24 \cf0 @app.route('/friends/<id>/edit', methods=['GET'])\
+def edit(id):\
+    query = "SELECT * FROM friends WHERE id = :specific_id"\
+    data = \{'specific_id': id\}\
+    friends = mysql.query_db(query, data)\
+    return render_template('friend_edit.html', one_friend=friends[0])\
 \
-@app.route('/process', methods=['POST'])\
-def submit():\
-    if len(request.form['email']) < 1:\
-        flash("Email cannot be blank!")\
-    elif not EMAIL_REGEX.match(request.form['email']):\
-        flash("Invalid Email Address!")\
-    else:\
-        flash("Success!")\
-        #query = "INSERT INTO email_addresses (email, #created_at, updated_at) VALUES (:email, NOW(), #NOW())"\
-        #data = \{ 'email': request.form['email'] \}\
-        #mysql.query_db(query, data)\
-        #return render_template("index.html", list = #'show', input = 'hide')\
+@app.route('/friends/<id>', methods=['POST'])\
+def update(id):\
+\
+    query = "UPDATE friends SET first_name = :first_name, last_name = :last_name, email = :email, updated_at = NOW() WHERE id = :id"\
+\
+    data = \{\
+            'first_name': request.form['first_name'],\
+            'last_name':  request.form['last_name'],\
+            'email': request.form['email'],\
+            'id': id\
+            \}\
+    mysql.query_db(query, data)\
     return redirect('/')\
 \
-\
-\
-\'97\'97\
-<!DOCTYPE html>\
-<html>\
-    <head>\
-        <meta charset="utf-8">\
-        <title>Email Validation With Data Base</title>\
-    </head>\
-    <body>\
-        \{% with messages = get_flashed_messages() %\}\
-            \{% if messages %\}\
-                \{% for message in messages %\}\
-                    <p>\{\{message\}\}</p>\
-                \{% endfor %\}\
-            \{% endif %\}\
-        \{% endwith %\}\
-\
-        \{\{ all_emails \}\}\
-        <div class=\{\{list\}\}>\
-            <h1>Email Addresses Entered:</h1>\
-            \{% for email in all_emails %\}\
-                <h3>\{\{ email['email'] \}\} \{\{ email['created_at'] \}\}</h3>\
-            \{% endfor %\}\
-        </div>\
-        <form class=\{\{input\}\} action="/process" method="post">\
-            Enter Your Email Address:<input type="text" name="email" value="" placeholder="Your Email">\
-            <input type="submit" name="Submit" value="Submit">\
-        </form>\
-    </body>\
-</html>\
+@app.route('/friends/<id>/delete', methods=['POST'])\
+def destroy(id):\
+    query = "DELETE FROM friends WHERE id = :id"\
+    data = \{'id': id\}\
+    mysql.query_db(query, data)\
+    return redirect('/')\
 }
