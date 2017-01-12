@@ -7,7 +7,7 @@
     <body>
         <h3>Login Successful!</h3>
         <h5>Hi {{ session['user_name'] }}, welcome!</h5>
-
+        <marquee>Reloading...</marquee>
                 <form class="" action="/" method="get">
                     <input type="submit" name="" value="Log Out">
                 </form>
@@ -21,11 +21,11 @@
             <p>{{ messages['message'] }}</p>
             <input type="hidden" name="message_id" value="{{ messages['id'] }}">
             <form class="" action="/messages/{{ messages['id'] }}/delete" method="post">
-                <input type="submit" name="" value="Delete message">
+                <input class="submit" type="submit" name="" value="Delete message">
             </form>
             <form class="" action="/add_comment" method="post">
                 <label for="comment">Post a comment <textarea name="comment" rows="5" cols="60"></textarea></label>
-                <input type="submit" name="" value="comment">
+                <input class="submit" type="submit" name="" value="comment">
                 <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
                 <input type="hidden" name="message_id" value="{{ messages['id'] }}">
             </form>
@@ -33,9 +33,10 @@
                 <h5>{{ comments['first_name'] }} {{ comments['last_name'] }} - {{ comments['updated_at'] }}</h5>
                 <p>{{ comments['comment'] }}</p>
             <form class="" action="/comments/{{ comments['id'] }}/delete" method="post">
-                <input type="submit" name="" value="Delete comment">
+                <input class="submit" type="submit" name="" value="Delete comment">
             </form>
             {% endfor %}
         {% endfor %}
+
     </body>
 </html>
