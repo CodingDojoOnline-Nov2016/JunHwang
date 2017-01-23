@@ -17,9 +17,10 @@ def index():
 
 @app.route('/wall', methods=['GET'])
 def wall():
+
     querym = "SELECT users.first_name, users.last_name, messages.id, messages.message, messages.updated_at FROM messages JOIN users ON users.id=messages.user_id ORDER BY messages.id DESC"
     messages = mysql.query_db(querym)
-    queryc = "SELECT users.first_name, users.last_name, comments.updated_at, comments.comment, comments.id FROM users JOIN comments ON users.id=comments.user_id JOIN messages ON comments.message_id=messages.id"
+    queryc = "SELECT users.first_name, users.last_name, comments.updated_at, comments.comment, messages.id, comments.message_id FROM users JOIN comments ON users.id=comments.user_id JOIN messages ON comments.message_id=messages.id"
     comments = mysql.query_db(queryc)
     return render_template('wall.html', all_messages=messages, all_comments=comments)
 

@@ -26,7 +26,7 @@ def process_money():
         session['goldcount'] += session['farmgold']
         temp = session['farmgold']
     elif request.form['building'] == 'cave':
-        session['goldcount'] += session['cavegold']
+        sesion['goldcount'] += session['cavegold']
         temp = session['cavegold']
     elif request.form['building'] == 'house':
         session['goldcount'] += session['housegold']
