@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Users_Courses</title>
+    </head>
+    <body>
+        <form class="" action="index.html" method="post">
+            <select class="" name="users">
+                {% for course in courses %}
+                <option value="{{course.account.email}}">{{course.account.email}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" name="" value="">
+        </form>
+    </body>
+</html>
