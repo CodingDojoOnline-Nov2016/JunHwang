@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from . import models
 from models import Courses
+from django.core.urlresolvers import reverse
 
 def index(request):
 
@@ -13,7 +14,7 @@ def index(request):
 def add(request):
     n = Courses(name=request.POST['name'], description=request.POST['description'])
     n.save()
-    return redirect('/')
+    return redirect(reverse('courses:index'))
 
 def delete(request, id):
     courses = models.Courses.objects.get(id=id)
@@ -27,10 +28,11 @@ def delete(request, id):
 def destroy(request, id):
     d = models.Courses.objects.get(id=id)
     d.delete()
-    return redirect('/')
+    return redirect(reverse('courses:u_c'))
 
 def users_courses(request):
-    courses = Courses.account.all()
+    courses = models.Courses.objects.all()
+    print courses
     context = {
         'courses':courses
     }

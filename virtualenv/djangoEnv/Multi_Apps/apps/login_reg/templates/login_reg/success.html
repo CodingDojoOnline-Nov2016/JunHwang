@@ -6,5 +6,9 @@
     </head>
     <body>
         <h1>Success! Welcome, {{first_name}}</h1>
+        <form class="" action="/login_reg/" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="Go Back">
+        </form>
     </body>
 </html>

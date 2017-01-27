@@ -7,7 +7,7 @@
     <body>
         <div class="">
             <h3>Add a new course</h3>
-            <form class="" action="/add" method="post">
+            <form id="profile" action="/courses/add" method="post">
                 {% csrf_token %}
                 Name:
                 <input type="text" name="name" value="">
@@ -39,5 +39,9 @@
                 {% endfor %}
             </table>
         </div>
+        <form class="" action="/" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="Return Home">
+        </form>
     </body>
 </html>

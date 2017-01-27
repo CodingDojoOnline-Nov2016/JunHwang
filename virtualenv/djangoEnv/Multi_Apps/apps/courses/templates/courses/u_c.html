@@ -11,7 +11,37 @@
                 <option value="{{course.account.email}}">{{course.account.email}}</option>
                 {% endfor %}
             </select>
-            <input type="submit" name="" value="">
+            <select class="" name="users">
+                {% for course in courses %}
+                <option value="{{course.name}}">{{course.name}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" name="" value="Add User To Course">
         </form>
+        <div class="">
+            <table>
+                <tr>
+                    <th>Course</th>
+                    <th>Title</th>
+                    <th>Number of Users</th>
+                    <th>Actions</th>
+                </tr>
+                {% for course in courses %}
+                <tr>
+                    <td>{{course.id}}</td>
+                    <td>{{course.name}}</td>
+                    <td>{{course.created_at}}</td>
+                    <td>
+                        <form class="" action="/courses/delete/{{course.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="remove" value="remove">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <form class="" action="index.html" method="post">
+                <input type="submit" name="return" value="Return Home">
+            </form>
     </body>
 </html>

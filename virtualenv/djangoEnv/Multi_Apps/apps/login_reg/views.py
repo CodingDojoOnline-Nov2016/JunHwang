@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .models import Users
+from . import models
+from django.core.urlresolvers import reverse
 # Create your views here.
 def index(request):
+    users = models.Users.usermanager.all()
+    context = {
+        'users':users
+    }
     if not 'errors' in request.session:
         request.session['errors'] = []
-    return render (request, 'login_reg/index.html')
+    return render (request, 'login_reg/index.html', context)
 
 def login(request):
     if request.method == "POST":
@@ -15,7 +21,7 @@ def login(request):
             return redirect('/success')
         else:
             request.session['errors'] = result[1]
-            return redirect('/')
+            return redirect(reverse('login_reg:index'))
     else:
         return redirect ('/')
 
@@ -25,12 +31,17 @@ def create(request):
         if result[0]:
             request.session['first_name'] = result[1].first_name
             request.session.pop('errors')
-            return redirect('/success')
+            return redirect(reverse('login_reg:success'))
         else:
             request.session['errors'] = result[1]
-            return redirect('/')
+            return redirect(reverse('login_reg:index'))
     else:
-        return redirect ('/')
+        return redirect(reverse('login_reg:index'))
+
+def destroy(request, id):
+    d = models.Users.usermanager.get(id=id)
+    d.delete()
+    return redirect(reverse('login_reg:index'))
 
 def success(request):
 

@@ -9,7 +9,7 @@
           <p>{{error}}</p>
         {% endfor %}
         <h2>Login</h2>
-        <form class="" action="/login" method="post">
+        <form class="" action="/login_reg/login" method="post">
             {% csrf_token %}
             <p>Email:</p>
             <input type="text" name="email" value="">
@@ -18,7 +18,7 @@
             <input type="submit" name="" value="Login">
         </form>
         <h2>Registration</h2>
-        <form class="" action="/create" method="post">
+        <form class="" action="/login_reg/create" method="post">
             {% csrf_token %}
             <p>First Name:</p>
             <input type="text" name="first_name" value="">
@@ -31,6 +31,26 @@
             <p>Confirm Password:</p>
             <input type="password" name="conf_pw" value="">
             <input type="submit" name="" value="Register">
+        </form>
+        <table>
+            <tr>
+                <th>List of registered IDs</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{user.email}}</td>
+                <td>
+                    <form class="" action="/login_reg/destroy/{{user.id}}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" name="remove" value="remove">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <form class="" action="/" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="Return Home">
         </form>
     </body>
 </html>
