@@ -1,17 +1,19 @@
 from django.shortcuts import render, HttpResponse, redirect
-from django.contrib import messages
-
-
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
-app = Flask(__name__)
-app.secret_key = "ThisIsSecret!"
-bcrypt = Bcrypt(app)
+from . import models
+from models import messages
+from models import comments
+from django.core.urlresolvers import reverse
 
 # Create your views here.
-def index(request):
-    query = "SELECT * FROM users"
-    friends = mysql.query_db(query)
-    return render(request, 'thewall/login.html')
+def wall(request, id):
+    request.session['first_name'] = request.POST['first_name']
+    request.session['last_name'] = request.POST['last_name']
+    request.session['id'] = id
+    
+    context = {
+
+    }
+    return render(request, 'thewall/wall.html', context)
 
 def wall(request):
     querym = "SELECT users.first_name, users.last_name, messages.id, messages.message, messages.updated_at FROM messages JOIN users ON users.id=messages.user_id ORDER BY messages.id DESC"

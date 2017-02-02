@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'apps.login_reg',
     'apps.courses',
     'apps.multiapp',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
